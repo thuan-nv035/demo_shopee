@@ -1,0 +1,46 @@
+/* eslint-disable */
+var files = 'app~21833f8f.78d5c9bda5561fc5d85e.js,app~748942c6.0917d9f7420ad508aaf0.js,app~970f9218.6c1dc617b7d9e2833980.js,app~c714bc7b.1560c8e334f104f47589.js,styles~21833f8f.600a537c33415008b682.js,vendors~253ae210.01b33d7b02f049d8a74e.js,vendors~7274e1de.d3f8dda1712f9ebd0bb5.js,vendors~c8728516.3c55dace4be6806f2e7c.js,vendors~cefe50a8.9d3d7a9b200642e190e3.js,vendors~db300d2f.6284a68b7a61f497f79a.js,vendors~ec8c427e.3d4243aff385b6c028ac.js,vendors~f9ca8911.b305d2a1a7b7c3837327.js,styles~21833f8f.d1451b35ccfa82622836.css'
+var isFromLocal = false
+var buildTime = 'Thu Sep 17 2020 20:56:20 GMT+0800 (+08)'
+var buildEnv = 'live'
+var buildRegion = 'vn'
+var host = window.location.href
+var isVisitingCN = host.indexOf('cn') > -1
+var cdnDomain = !!isFromLocal
+  ? ''
+  : isVisitingCN
+    ? 'https://deo.shopeesz.com/shopee/shopee-seller-' + buildEnv + '-' + buildRegion
+    : 'https://deo.shopeemobile.com/shopee/shopee-seller-' + buildEnv + '-' + buildRegion
+/* eslint-enable */
+function createAssetScriptTags (fileNames) {
+  console.log('MiniChat Build Time: ', buildTime)
+  var files = fileNames.split(',')
+  var fileLength = files.length
+  var fragment = document.createDocumentFragment()
+  if (fileLength) {
+    for (var i = 0; i < fileLength; i++) {
+      var jsFile = files[i].indexOf('js') > -1
+      var cssFile = files[i].indexOf('css') > -1
+      var fileUrl = cdnDomain + '/chateasy/' + files[i]
+      if (jsFile) {
+        var jstag = document.createElement('script')
+        jstag.src = fileUrl
+        jstag.type = 'text/javascript'
+        jstag.charset = 'utf-8'
+        if (jstag) {
+          fragment.appendChild(jstag)
+        }
+      } else if (cssFile) {
+        var csstag = document.createElement('link')
+        csstag.href = fileUrl
+        csstag.rel = 'stylesheet'
+        csstag.type = 'text/css'
+        if (csstag) {
+          fragment.appendChild(csstag)
+        }
+      }
+    }
+    document.body.appendChild(fragment)
+  }
+}
+createAssetScriptTags(files)
